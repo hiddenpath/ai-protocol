@@ -36,14 +36,14 @@ validate_file() {
 
     echo -n "Validating $file... "
 
-    # Use draft2020 spec to support JSON Schema Draft 2020-12
-    # The schema file uses "$schema": "https://json-schema.org/draft/2020-12/schema"
-    if ajv validate -s "$schema" -d "$file" --spec=draft2020 >/dev/null 2>&1; then
+    # Use draft-07 spec (widely supported by ajv-cli)
+    # The schema file uses "$schema": "https://json-schema.org/draft-07/schema"
+    if ajv validate -s "$schema" -d "$file" >/dev/null 2>&1; then
         echo -e "${GREEN}✅ PASSED${NC}"
         ((PASSED++))
     else
         echo -e "${RED}❌ FAILED${NC}"
-        ajv validate -s "$schema" -d "$file" --spec=draft2020
+        ajv validate -s "$schema" -d "$file"
         ((FAILED++))
     fi
 }
