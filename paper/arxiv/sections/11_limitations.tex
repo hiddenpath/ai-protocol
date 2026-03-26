@@ -1,0 +1,13 @@
+\section{Limitations and Evaluation Agenda}
+
+This work focuses on architectural formalization and runtime boundaries. It does not provide a full-scale benchmark study of latency overhead, translation-cost distribution, or end-to-end economic efficiency under production traffic.
+
+A complete systems evaluation should include:
+\begin{enumerate}[leftmargin=1.5em]
+  \item \textbf{Translation Overhead:} protocol-to-provider transformation latency and variance.
+  \item \textbf{Runtime Scalability:} throughput and tail latency under mixed synchronous and streaming workloads.
+  \item \textbf{Failure Behavior:} bounded-retry impact and error propagation under provider instability.
+  \item \textbf{Policy--Execution Separation Cost:} control-plane/data-plane interaction overhead under dynamic routing.
+\end{enumerate}
+
+These measurements are left to subsequent experimental work and cross-runtime benchmark suites.

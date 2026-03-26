@@ -1,0 +1,33 @@
+\section{Related Work}
+
+\subsection{AI Orchestration Frameworks}
+
+Frameworks such as LangChain~\cite{langchain_docs} provide practical orchestration abstractions, but often couple orchestration policy and execution mechanics in one framework runtime. This coupling improves developer convenience while weakening boundary clarity and runtime portability.
+
+\subsection{Workflow Engines}
+
+Workflow engines such as Airflow and Temporal provide robust DAG execution and fault handling. However, their abstraction unit is typically task- or workflow-level orchestration, rather than capability-level semantic invocation with provider-agnostic protocol contracts.
+
+\subsection{Service Mesh and RPC Systems}
+
+Service meshes and RPC infrastructures provide routing, retries, and observability at network-request granularity. By contrast, the AI Execution Layer operates at capability semantics and explicitly separates policy routing from deterministic invocation.
+
+\subsection{Serverless and Function Runtimes}
+
+Function-as-a-service platforms provide scalable execution environments, but do not standardize capability abstraction, capability manifests, or cross-provider semantic equivalence.
+
+\subsection{Position of This Work}
+
+This paper contributes a minimal execution boundary for AI-Native systems:
+\begin{itemize}[leftmargin=*,nosep]
+  \item protocol-first capability invocation,
+  \item strict cognition--policy--execution separation,
+  \item runtime-level portability across providers and languages, and
+  \item explicit non-responsibilities that prevent policy leakage into execution.
+\end{itemize}
+
+\subsection{Multi-Language Implementation}
+
+A key validation of the minimal runtime design is its implementability across multiple programming languages. Reference implementations exist in Rust, Python, TypeScript, and Go, demonstrating that the abstraction is not tied to a single language ecosystem. Cross-language consistency is maintained through shared protocol specifications, language-agnostic capability schemas, standardized request/response formats, and common behavioral test suites.
+
+This multi-language support strengthens the claim that the minimal runtime abstraction is ecosystem-oriented rather than framework-specific.

@@ -1,0 +1,93 @@
+\section{Execution Layer Position in the AI-Native Stack}
+\label{sec:stack}
+
+\subsection{Five-Layer Architecture}
+
+The execution layer sits within a broader AI-Native implementation stack. In the final arXiv bundle, the stack overview will be supplied as a dedicated vector figure. The current conversion pass embeds a LaTeX-native schematic to preserve semantics and compile without external graphics.
+
+\begin{figure}[t]
+\centering
+\fbox{%
+\begin{minipage}{0.88\linewidth}
+\centering
+\vspace{0.6em}
+\fbox{\parbox{0.82\linewidth}{\centering \textbf{User Interface}}}
+
+\vspace{0.8em}
+$\downarrow$
+
+\vspace{0.8em}
+\fbox{\parbox{0.82\linewidth}{\centering \textbf{AI-Native Applications}\\(Agents, Workflows, Applications)}}
+
+\vspace{0.8em}
+$\downarrow$
+
+\vspace{0.8em}
+\fbox{\parbox{0.82\linewidth}{\centering \textbf{AI Cognition Layer}\\(LLMs, Reasoning, Planning)}}
+
+\vspace{0.8em}
+$\downarrow$
+
+\vspace{0.8em}
+\fbox{\parbox{0.82\linewidth}{\centering \textbf{AI Action Layer}\\
+\vspace{0.4em}
+\fbox{\parbox{0.66\linewidth}{\centering Orchestration / Policy}}
+\\[0.4em]
+$\downarrow$
+\\[0.4em]
+\fbox{\parbox{0.66\linewidth}{\centering Execution Runtime}}}}
+
+\vspace{0.8em}
+$\downarrow$
+
+\vspace{0.8em}
+\fbox{\parbox{0.82\linewidth}{\centering \textbf{Capability Ecosystem}\\(Models, APIs, Tools, Devices)}}
+
+\vspace{0.8em}
+$\downarrow$
+
+\vspace{0.8em}
+\fbox{\parbox{0.82\linewidth}{\centering \textbf{Infrastructure}\\(Cloud, Edge, Networks)}}
+\vspace{0.6em}
+\end{minipage}}
+\caption{Five-layer AI-Native implementation stack with the action layer decomposed into orchestration and execution.}
+\label{fig:five-layer-stack}
+\end{figure}
+
+\subsection{Action Layer Decomposition}
+
+A critical insight is that the action layer comprises two subcomponents:
+
+\paragraph{Orchestration component.}
+The orchestration component is responsible for capability routing, provider selection, policy evaluation, and environment selection.
+
+\paragraph{Execution component.}
+The execution component is responsible for API invocation, tool execution, error handling, and result normalization.
+
+This decomposition maintains clear separation of concerns. The orchestration layer makes decisions, such as which provider or environment to use, while the execution layer performs actions, such as invoking APIs and returning normalized results.
+
+When mapped to the logical model in \cref{eq:logical-model}, the orchestration component corresponds to $P$, and the execution runtime corresponds to $E$.
+
+\begin{table}[t]
+\caption{Mapping between the logical model and the implementation stack.}
+\label{tab:logical-vs-implementation}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{} l l X @{}}
+\toprule
+Logical element & Implementation mapping & Responsibility \\
+\midrule
+$A$ & AI Cognition Layer & Reasoning, planning, memory, and task decomposition. \\
+$P$ & Policy Orchestration Layer & Routing, provider selection, policy evaluation, and workflow control. \\
+$E$ & Execution Runtime & Deterministic capability invocation, protocol translation, result normalization, and execution telemetry forwarding. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Defining Statement}
+
+\begin{quote}
+\emph{The execution layer is the action interface between AI cognition and the real-world capability ecosystem.}
+\end{quote}
+
+This definition captures the essential role of the layer: mediating between what agents decide to do and how those decisions are realized through capability execution.

@@ -30,4 +30,33 @@ The primary contributions are as follows:
     \item \textbf{Cross-Layer Integration:} The three-layer logical model is mapped to the five-layer AI-Native implementation stack, clarifying how execution-layer invariants are preserved in full-system deployments.
 \end{enumerate}
 
-The execution layer is then positioned within the broader AI-Native architecture developed in later sections. Figure placeholders are introduced in this initial conversion pass; the ASCII diagrams from the Markdown source will be redrawn as vector figures in the next phase.
+The execution layer is then positioned within the broader AI-Native architecture developed in later sections. \Cref{fig:layered-architecture-overview} summarizes the layered boundary, while later figures refine the implementation stack and execution flows.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+  box/.style={
+    draw,
+    rounded corners=2pt,
+    minimum width=10.8cm,
+    minimum height=1.05cm,
+    align=center,
+    font=\small
+  },
+  boundary/.style={font=\small\itshape},
+  >=Latex
+]
+\node[box, fill=blue!8] (agent) { \textbf{Agent Intelligence Layer}\\(Reasoning, Planning, Cognition) };
+\node[box, fill=green!8, below=0.95cm of agent] (orch) { \textbf{Policy Orchestration Layer}\\(Routing, Provider Selection, Workflow Control) };
+\node[box, fill=orange!10, below=0.95cm of orch] (exec) { \textbf{AI Execution Layer (Execution Runtime)}\\Protocol-to-API Translation \quad $\bullet$ \quad Result Normalization \quad $\bullet$ \quad Error Propagation };
+\node[boundary, below=0.85cm of exec] (boundary) {--- AI Protocol Boundary ---};
+\node[box, fill=purple!8, below=0.85cm of boundary] (prov) { \textbf{Capability Providers / Tools / Devices}\\(LLMs, APIs, Databases, External Services, IoT) };
+
+\draw[->, thick] (agent) -- (orch);
+\draw[->, thick] (orch) -- (exec);
+\draw[->, thick] (exec) -- (boundary);
+\draw[->, thick] (boundary) -- (prov);
+\end{tikzpicture}
+\caption{Layered architecture of the AI Execution Layer within AI-Native systems, illustrating the separation between cognition, policy orchestration, and capability execution.}
+\label{fig:layered-architecture-overview}
+\end{figure}

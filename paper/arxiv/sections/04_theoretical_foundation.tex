@@ -103,10 +103,42 @@ G = (\mathrm{Capabilities}, \mathrm{Dependencies})
 and is constrained to a directed acyclic graph for execution safety and deterministic ordering.
 
 \paragraph{Example.}
-The task ``Write and publish a blog post'' can be represented by the capability chain
-\begin{center}
-\texttt{search} $\rightarrow$ \texttt{summarize} $\rightarrow$ \texttt{generate\_text} $\rightarrow$ \texttt{translate} $\rightarrow$ \texttt{publish}.
-\end{center}
+The task ``Write and publish a blog post'' can be represented as the capability graph shown in \cref{fig:capability-graph}.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+  node distance=1.2cm and 0.8cm,
+  cap/.style={draw, rounded corners=2pt, minimum width=2.0cm, minimum height=0.8cm, align=center, fill=blue!6},
+  exec/.style={draw, rounded corners=2pt, minimum width=1.2cm, minimum height=0.6cm, align=center, fill=green!8},
+  >=Latex
+]
+\node[cap] (search) {\texttt{search}};
+\node[cap, right=of search] (sum) {\texttt{summarize}};
+\node[cap, right=of sum] (gen) {\texttt{generate\_text}};
+\node[cap, right=of gen] (trans) {\texttt{translate}};
+\node[cap, right=of trans] (pub) {\texttt{publish}};
+
+\node[exec, below=of search] (e1) {exec};
+\node[exec, below=of sum] (e2) {exec};
+\node[exec, below=of gen] (e3) {exec};
+\node[exec, below=of trans] (e4) {exec};
+\node[exec, below=of pub] (e5) {exec};
+
+\draw[->] (search) -- (sum);
+\draw[->] (sum) -- (gen);
+\draw[->] (gen) -- (trans);
+\draw[->] (trans) -- (pub);
+
+\draw[->] (search) -- (e1);
+\draw[->] (sum) -- (e2);
+\draw[->] (gen) -- (e3);
+\draw[->] (trans) -- (e4);
+\draw[->] (pub) -- (e5);
+\end{tikzpicture}
+\caption{Capability graph for a multi-step publishing task.}
+\label{fig:capability-graph}
+\end{figure}
 
 \paragraph{Execution process.}
 \begin{enumerate}[leftmargin=1.5em]

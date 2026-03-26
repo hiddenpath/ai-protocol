@@ -1,0 +1,27 @@
+\section{Conclusion}
+
+The emergence of AI agents requires a dedicated architectural boundary for capability execution. This paper introduces the AI Execution Layer as a minimal runtime architecture for agent-driven systems.
+
+The architecture separates cognition, orchestration, and execution through the logical model $S = (A, P, E)$. Within this boundary, the runtime is constrained to six execution responsibilities:
+\begin{enumerate}[leftmargin=1.5em]
+    \item capability invocation,
+    \item protocol translation,
+    \item result normalization,
+    \item connection handling,
+    \item error propagation, and
+    \item session transport.
+\end{enumerate}
+
+The theoretical foundation is defined by four principles:
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Capability Abstraction:} agents depend on capabilities rather than providers.
+    \item \textbf{Cognition--Action Separation:} intelligence and execution are separated by an action layer.
+    \item \textbf{Capability Routing:} execution is dynamically routed based on context.
+    \item \textbf{Capability Graph Execution:} complex tasks decompose into capability graphs.
+\end{enumerate}
+
+The execution layer functions as the action interface between AI cognition and the real-world capability ecosystem. This boundary decouples agents from providers, improves application portability, and supports ecosystem-scale growth.
+
+More broadly, the proposed layer is analogous to operating-system and RPC boundaries in earlier computing eras: it provides a stable execution contract across heterogeneous providers while preserving higher-layer policy autonomy.
+
+As the ecosystem matures, this boundary is expected to become a foundational component of AI-Native software infrastructure.

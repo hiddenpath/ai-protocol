@@ -44,3 +44,20 @@ To maintain its minimal design, the runtime explicitly avoids:
 \end{itemize}
 
 These responsibilities belong in the orchestration and agent layers, maintaining clear separation of concerns.
+
+\begin{table}[t]
+\caption{Execution-runtime responsibilities and explicit exclusions.}
+\label{tab:runtime-boundary}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{} l X X @{}}
+\toprule
+Category & Included in the execution runtime & Explicitly excluded from the execution runtime \\
+\midrule
+Invocation path & Capability invocation, protocol translation, connection handling, and result normalization & Capability planning and multi-step workflow design \\
+Failure handling & Error propagation and bounded network-level micro-retries & Provider fallback and orchestration-level retry policy \\
+Context handling & Session-context transport and execution metadata emission & Business-policy interpretation and application-specific logic \\
+Selection logic & Deterministic execution of the supplied request & Provider selection, routing optimization, and policy evaluation \\
+\bottomrule
+\end{tabularx}
+\end{table}

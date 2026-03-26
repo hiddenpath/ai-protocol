@@ -1,0 +1,33 @@
+\section{Architectural Benefits}
+
+\subsection{Decoupling}
+
+Applications become independent of specific providers. Agents express capability requirements without needing to know which provider will fulfill them. This decoupling enables:
+\begin{itemize}[leftmargin=*,nosep]
+  \item provider substitution without application changes,
+  \item multi-vendor strategies, and
+  \item graceful degradation when providers are unavailable.
+\end{itemize}
+
+\subsection{Portability}
+
+AI applications can run across different runtime environments. As long as runtimes implement the AI Protocol, applications can be deployed without modification. This portability is analogous to how container images can run on any compatible container runtime~\cite{kubernetes_arch,burns_borg_kubernetes}.
+
+\subsection{Capability Discovery}
+
+New providers can register capabilities without modifying applications. The capability registry serves as a dynamic discovery mechanism, enabling:
+\begin{itemize}[leftmargin=*,nosep]
+  \item new capability providers to enter the ecosystem,
+  \item applications to discover new capabilities at runtime, and
+  \item ecosystem growth without centralized coordination.
+\end{itemize}
+
+\subsection{Ecosystem Growth}
+
+Standard protocols enable third-party extensions and tools. The minimal runtime design creates clear extension points:
+\begin{itemize}[leftmargin=*,nosep]
+  \item custom capability providers,
+  \item alternative orchestration strategies,
+  \item specialized runtime implementations, and
+  \item monitoring and observability tools.
+\end{itemize}

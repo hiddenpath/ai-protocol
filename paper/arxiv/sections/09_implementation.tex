@@ -1,0 +1,60 @@
+\section{Implementation Considerations}
+
+\subsection{Runtime Interface}
+
+The execution runtime exposes a minimal interface:
+
+\begin{lstlisting}[caption={Minimal execution runtime interface.},label={lst:runtime-interface}]
+interface ExecutionRuntime {
+    Result execute(CapabilityRequest request)
+    List<Capability> listCapabilities()
+    HealthStatus healthCheck()
+}
+\end{lstlisting}
+
+\subsection{Capability Request Format}
+
+Capability requests follow a standardized format:
+
+\begin{lstlisting}[caption={Standardized capability request format.},label={lst:capability-request}]
+{
+  "capability": "generate_text",
+  "version": "1.0",
+  "input": {
+    "prompt": "Explain quantum computing",
+    "max_tokens": 500
+  },
+  "context": {
+    "session_id": "abc123",
+    "request_id": "req456"
+  },
+  "provider": {
+    "name": "provider_a",
+    "endpoint": "https://api.provider-a.com"
+  }
+}
+\end{lstlisting}
+
+\subsection{Result Format}
+
+Results are normalized to a standard structure with execution metrics:
+
+\begin{lstlisting}[caption={Normalized execution result with telemetry.},label={lst:capability-result}]
+{
+  "capability": "generate_text",
+  "status": "success",
+  "output": {
+    "text": "Quantum computing is...",
+    "tokens_used": 450
+  },
+  "metadata": {
+    "provider": "provider_a",
+    "latency_ms": 1250,
+    "translation_latency_ms": 15,
+    "retry_count": 0,
+    "timestamp": "2026-03-15T10:30:00Z"
+  }
+}
+\end{lstlisting}
+
+The \texttt{retry\_count} and \texttt{translation\_latency\_ms} fields provide visibility into execution behavior, enabling the Policy Orchestration Layer to make data-driven routing decisions.

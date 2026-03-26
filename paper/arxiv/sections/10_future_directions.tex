@@ -1,0 +1,28 @@
+\section{Future Directions}
+
+\subsection{Capability Discovery Protocol}
+
+Future work could define a standardized capability discovery protocol enabling dynamic capability registration, capability health monitoring, and automatic capability indexing.
+
+\subsection{Application Packaging Standard}
+
+A standardized application packaging format would enable portable AI application distribution, standard deployment models, and explicit capability requirement declaration.
+
+\subsection{Capability Marketplace}
+
+As capabilities become standardized, marketplaces may emerge for premium capability offerings, capability quality ratings, and usage-based pricing.
+
+\subsection{Edge Runtime Support}
+
+The execution-layer architecture naturally supports edge-computing scenarios. Runtimes can operate locally on personal devices, home servers, and embedded systems while connecting to local models, local automation systems, and cloud capabilities. This architecture enables personal AI infrastructure, where users operate local runtimes orchestrating personal capabilities.
+
+\subsection{Asynchronous Notification Support}
+
+While the current design relies on polling for long-running tasks, future runtime versions may support callback-based notifications. In this model:
+\begin{itemize}[leftmargin=*,nosep]
+  \item providers register webhook endpoints in their manifests,
+  \item the runtime translates provider-specific callbacks into protocol-standard events, and
+  \item the Policy Orchestration Layer subscribes to capability-completion events rather than polling.
+\end{itemize}
+
+This extension would reduce connection overhead for high-concurrency scenarios and enable true event-driven capability orchestration.

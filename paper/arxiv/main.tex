@@ -10,6 +10,8 @@
 \usepackage{tabularx}
 \usepackage{threeparttable}
 \usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{longtable}
 \usepackage{xcolor}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -19,6 +21,8 @@
 \usepackage[nameinlink,noabbrev]{cleveref}
 
 \newtheorem{definition}{Definition}
+
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
 
 \lstdefinestyle{paperlisting}{
   basicstyle=\ttfamily\small,
@@ -44,6 +48,15 @@
 \input{sections/02_formal_model}
 \input{sections/03_minimal_execution}
 \input{sections/04_theoretical_foundation}
+\input{sections/05_protocol}
+\input{sections/06_stack}
+\input{sections/07_benefits}
+\input{sections/08_related_work}
+\input{sections/09_implementation}
+\input{sections/10_future_directions}
+\input{sections/11_limitations}
+\input{sections/12_conclusion}
+\input{sections/appendices}
 
 \bibliographystyle{plain}
 \bibliography{bibliography/refs}

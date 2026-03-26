@@ -1,0 +1,95 @@
+\section{AI Protocol and Capability Definition}
+
+\subsection{Protocol Role}
+
+The AI Protocol defines how capabilities are described. It specifies:
+\begin{itemize}[leftmargin=*,nosep]
+  \item \textbf{Providers:} entities offering AI or non-AI capabilities.
+  \item \textbf{Models:} specific AI models with defined capabilities.
+  \item \textbf{Capability Types:} categories of capabilities such as chat, embedding, and image generation.
+  \item \textbf{Endpoints:} where capabilities can be invoked.
+  \item \textbf{Parameters:} input and output schemas.
+\end{itemize}
+
+The protocol serves as the contract boundary between orchestration and execution: orchestration decides policy, while execution enforces invocation semantics.
+
+The protocol is typically represented as structured manifests:
+\begin{lstlisting}[language={},caption={Provider-centric protocol manifest organization.},label={lst:provider-manifest}]
+provider/
+|- metadata.yaml
+\- models/
+   |- model_a.yaml
+   \- model_b.yaml
+      \- capabilities/
+         |- chat.yaml
+         \- embedding.yaml
+\end{lstlisting}
+
+\subsection{Capability Definition}
+
+Each capability is defined with:
+\begin{itemize}[leftmargin=*,nosep]
+  \item \textbf{Name:} a semantic identifier such as \texttt{generate\_text} or \texttt{search\_web}.
+  \item \textbf{Input Schema:} a structured input specification.
+  \item \textbf{Output Schema:} a structured output specification.
+  \item \textbf{Execution Semantics:} the invocation and runtime behavior contract.
+  \item \textbf{Quality Metadata ($Q$):} measured quality fields emitted by execution.
+  \item \textbf{Pricing Metadata ($\Pi$):} metering and billing fields emitted by execution.
+  \item \textbf{Provider Metadata:} information about the provider offering this capability.
+\end{itemize}
+
+\begin{lstlisting}[language={},caption={Example capability definition.},label={lst:capability-definition}]
+name: generate_text
+description: Generate text based on a prompt
+input_schema:
+  type: object
+  properties:
+    prompt:
+      type: string
+      description: The input prompt
+    max_tokens:
+      type: integer
+      description: Maximum tokens to generate
+  required: [prompt]
+output_schema:
+  type: object
+  properties:
+    text:
+      type: string
+      description: Generated text
+execution:
+  endpoint: /v1/completions
+  method: POST
+quality:
+  telemetry_fields: [execution_latency_ms, retry_count]
+pricing:
+  billing_model: per_token
+  currency: USD
+provider:
+  name: Example Provider
+  version: 1.0.0
+\end{lstlisting}
+
+\subsection{Provider-Centric Organization}
+
+An important design decision is that capability descriptions remain provider-centric rather than capability-centric. The manifest structure follows:
+\begin{center}
+\texttt{Provider} $\rightarrow$ \texttt{Models} $\rightarrow$ \texttt{Capabilities}
+\end{center}
+rather than
+\begin{center}
+\texttt{Capability} $\rightarrow$ \texttt{Providers}.
+\end{center}
+
+The runtime can dynamically construct a capability index:
+\begin{lstlisting}[language={},caption={Runtime-generated capability index view.},label={lst:capability-index}]
+chat/
+|- provider A
+|- provider B
+\- provider C
+embedding/
+|- provider A
+\- provider D
+\end{lstlisting}
+
+This index can be rebuilt periodically and optimized based on user preferences, latency measurements, cost calculations, and reliability metrics.
