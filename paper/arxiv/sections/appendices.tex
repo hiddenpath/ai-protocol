@@ -6,7 +6,7 @@
 
 The complete execution flow from agent intent to provider response is shown in \cref{fig:sequence-complete}.
 
-\begin{figure*}[t]
+\begin{figure}[H]
   \centering
   \resizebox{0.98\textwidth}{!}{%
   \begin{tikzpicture}[
@@ -46,13 +46,13 @@ The complete execution flow from agent intent to provider response is shown in \
   \end{tikzpicture}}
   \caption{Complete execution flow from agent intent to normalized task result.}
   \label{fig:sequence-complete}
-\end{figure*}
+\end{figure}
 
 \subsection{Error Handling Flow}
 
 The error propagation path is shown in \cref{fig:sequence-error}. The diagram preserves the bounded micro-retry distinction between network-level execution behavior and orchestration-level retry policy.
 
-\begin{figure*}[t]
+\begin{figure}[H]
   \centering
   \resizebox{0.9\textwidth}{!}{%
   \begin{tikzpicture}[
@@ -81,7 +81,7 @@ The error propagation path is shown in \cref{fig:sequence-error}. The diagram pr
   \end{tikzpicture}}
   \caption{Execution error propagation and policy handoff.}
   \label{fig:sequence-error}
-\end{figure*}
+\end{figure}
 
 \section{Capability Definition Examples}
 

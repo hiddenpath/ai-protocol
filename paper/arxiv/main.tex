@@ -16,6 +16,8 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{enumitem}
+\usepackage{alltt}
+\usepackage{float}
 \usepackage{listings}
 \usepackage[hidelinks]{hyperref}
 \usepackage[nameinlink,noabbrev]{cleveref}
@@ -25,14 +27,35 @@
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric}
 
 \lstdefinestyle{paperlisting}{
-  basicstyle=\ttfamily\small,
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{gray!6},
   breaklines=true,
   frame=single,
+  framerule=0.4pt,
+  rulecolor=\color{black!18},
+  framesep=6pt,
+  xleftmargin=0.4em,
+  xrightmargin=0.2em,
   columns=fullflexible,
   keepspaces=true,
-  showstringspaces=false
+  showstringspaces=false,
+  aboveskip=0.8em,
+  belowskip=0.8em
 }
 \lstset{style=paperlisting}
+
+\newenvironment{codeframe}[1][0.82\linewidth]{%
+  \begin{center}
+  \setlength{\fboxsep}{8pt}%
+  \fcolorbox{black!18}{gray!6}{%
+    \begin{minipage}{#1}
+    \begin{alltt}\ttfamily\small
+}{%
+    \end{alltt}
+    \end{minipage}
+  }
+  \end{center}
+}
 
 \title{The AI Execution Layer: A Minimal Runtime Architecture for AI-Native Systems}
 \author{Wang Luqiang\\ai-lib}
@@ -58,6 +81,7 @@
 \input{sections/12_conclusion}
 \input{sections/appendices}
 
+\nocite{*}
 \bibliographystyle{plain}
 \bibliography{bibliography/refs}
 

@@ -14,7 +14,9 @@ The AI Protocol defines how capabilities are described. It specifies:
 The protocol serves as the contract boundary between orchestration and execution: orchestration decides policy, while execution enforces invocation semantics.
 
 The protocol is typically represented as structured manifests:
-\begin{lstlisting}[language={},caption={Provider-centric protocol manifest organization.},label={lst:provider-manifest}]
+\begin{quote}
+\small
+\begin{alltt}
 provider/
 |- metadata.yaml
 \- models/
@@ -23,7 +25,8 @@ provider/
       \- capabilities/
          |- chat.yaml
          \- embedding.yaml
-\end{lstlisting}
+\end{alltt}
+\end{quote}
 
 \subsection{Capability Definition}
 
@@ -82,7 +85,9 @@ rather than
 \end{center}
 
 The runtime can dynamically construct a capability index:
-\begin{lstlisting}[language={},caption={Runtime-generated capability index view.},label={lst:capability-index}]
+\begin{quote}
+\small
+\begin{alltt}
 chat/
 |- provider A
 |- provider B
@@ -90,6 +95,7 @@ chat/
 embedding/
 |- provider A
 \- provider D
-\end{lstlisting}
+\end{alltt}
+\end{quote}
 
 This index can be rebuilt periodically and optimized based on user preferences, latency measurements, cost calculations, and reliability metrics.

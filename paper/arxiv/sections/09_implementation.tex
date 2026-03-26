@@ -4,57 +4,66 @@
 
 The execution runtime exposes a minimal interface:
 
-\begin{lstlisting}[caption={Minimal execution runtime interface.},label={lst:runtime-interface}]
-interface ExecutionRuntime {
+\begin{quote}
+\small
+\begin{alltt}
+interface ExecutionRuntime \{
     Result execute(CapabilityRequest request)
     List<Capability> listCapabilities()
     HealthStatus healthCheck()
-}
-\end{lstlisting}
+\}
+\end{alltt}
+\end{quote}
 
 \subsection{Capability Request Format}
 
 Capability requests follow a standardized format:
 
-\begin{lstlisting}[caption={Standardized capability request format.},label={lst:capability-request}]
-{
-  "capability": "generate_text",
+\begin{quote}
+\small
+\begin{alltt}
+\{
+  "capability": "generate\_text",
   "version": "1.0",
-  "input": {
+  "input": \{
     "prompt": "Explain quantum computing",
-    "max_tokens": 500
-  },
-  "context": {
-    "session_id": "abc123",
-    "request_id": "req456"
-  },
-  "provider": {
-    "name": "provider_a",
+    "max\_tokens": 500
+  \},
+  "context": \{
+    "session\_id": "abc123",
+    "request\_id": "req456"
+  \},
+  "provider": \{
+    "name": "provider\_a",
     "endpoint": "https://api.provider-a.com"
-  }
-}
-\end{lstlisting}
+  \}
+\}
+\end{alltt}
+\end{quote}
 
 \subsection{Result Format}
 
 Results are normalized to a standard structure with execution metrics:
 
-\begin{lstlisting}[caption={Normalized execution result with telemetry.},label={lst:capability-result}]
-{
-  "capability": "generate_text",
+\begin{quote}
+\small
+\begin{alltt}
+\{
+  "capability": "generate\_text",
   "status": "success",
-  "output": {
+  "output": \{
     "text": "Quantum computing is...",
-    "tokens_used": 450
-  },
-  "metadata": {
-    "provider": "provider_a",
-    "latency_ms": 1250,
-    "translation_latency_ms": 15,
-    "retry_count": 0,
+    "tokens\_used": 450
+  \},
+  "metadata": \{
+    "provider": "provider\_a",
+    "latency\_ms": 1250,
+    "translation\_latency\_ms": 15,
+    "retry\_count": 0,
     "timestamp": "2026-03-15T10:30:00Z"
-  }
-}
-\end{lstlisting}
+  \}
+\}
+\end{alltt}
+\end{quote}
 
 The \texttt{retry\_count} and \texttt{translation\_latency\_ms} fields provide visibility into execution behavior, enabling the Policy Orchestration Layer to make data-driven routing decisions.
