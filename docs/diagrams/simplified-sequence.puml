@@ -1,0 +1,28 @@
+@startuml
+skinparam participantPadding 40
+skinparam sequenceArrowThickness 1.5
+skinparam backgroundColor white
+
+participant "Agent" as A #B8CCE4
+participant "Orchest." as O #FFE6A0
+participant "Contact" as C #C8E6C0
+participant "Runtime" as R #D4E88E
+participant "Provider" as P #D8BFD8
+
+A -> O : 1: Task Intent
+activate O
+O -> C : 2: Capability Req
+activate C
+C -> R : 3: Exec Directive
+activate R
+R -> P : 4: API Call
+activate P
+P --> R : 5: Response
+deactivate P
+R --> C : 6: Result
+deactivate R
+C --> O : 7: Cap Result
+deactivate C
+O --> A : 8: Task Result
+deactivate O
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+skinparam participantPadding 30
+skinparam sequenceArrowThickness 1.5
+skinparam backgroundColor white
+
+participant "Agent\nLayer" as A #B8CCE4
+participant "Orchest.\nLayer" as O #FFE6A0
+participant "Contact\nLayer" as C #C8E6C0
+participant "Execution\nRuntime" as R #D4E88E
+participant "Provider\nAPI" as P #D8BFD8
+
+A -> O : 1. Task Intent
+activate O
+
+O -> C : 2. Capability Requirement
+activate C
+
+C -> R : 3. Query Registry
+activate R
+
+R --> C : 4. Available Providers
+deactivate R
+
+note over C
+  5. Routing Decision
+  (based on context)
+end note
+
+C -> R : 6. Execution Directive
+activate R
+
+R -> P : 7. API Call
+activate P
+
+P --> R : 8. Response
+deactivate P
+
+R --> C : 9. Normalized Result
+deactivate R
+
+C --> O : 10. Capability Result
+deactivate C
+
+O --> A : 11. Task Result
+deactivate O
+@enduml
