@@ -1,0 +1,119 @@
+\section{Theoretical Foundation: Four Core Principles}
+
+\subsection{Principle 1: Capability Abstraction}
+
+\paragraph{Principle.}
+\emph{An AI agent should depend on capabilities rather than concrete providers or APIs.}
+
+\paragraph{Formal definition.}
+A capability is defined as
+\begin{equation}
+C = (I, O, \Sigma, Q, \Pi)
+\label{eq:capability-tuple}
+\end{equation}
+where:
+\begin{itemize}[leftmargin=*,nosep]
+  \item $I$ is the input schema,
+  \item $O$ is the output schema,
+  \item $\Sigma$ is the execution semantics,
+  \item $Q$ is the quality telemetry schema, and
+  \item $\Pi$ is the pricing and billing schema.
+\end{itemize}
+
+A provider implements a capability, and agents invoke capabilities through
+\begin{equation}
+\mathrm{Invoke}(C, \mathrm{Input}) \rightarrow \mathrm{Output}.
+\label{eq:invoke}
+\end{equation}
+
+Rather than invoking provider-specific APIs directly, agents express the executable ability they require. This abstraction enables provider substitution without agent modification, multi-provider capability implementations, and standardized capability discovery and invocation.
+
+\begin{table}[t]
+\caption{Comparison between capability and related abstractions.}
+\label{tab:capability-comparison}
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{} l X X @{}}
+\toprule
+Concept & Essence & Role \\
+\midrule
+Function & Computation & Algorithmic operation \\
+API & Remote interface & Access mechanism \\
+Tool & Agent-callable function & Invocation interface \\
+\textbf{Capability} & \textbf{Executable ability} & \textbf{Real-world action} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Capabilities represent abilities, whereas APIs represent access mechanisms. This distinction is fundamental to the AI-Native architecture. In this paper's scope, the execution runtime does not optimize $Q$ or $\Pi$; it only measures, normalizes, and forwards these fields for policy decisions in the orchestration layer.
+
+\subsection{Principle 2: Cognition--Action Separation}
+
+\paragraph{Principle.}
+\emph{AI cognition and capability execution should be separated by an action layer.}
+
+\paragraph{Architecture.}
+The architecture can be summarized as:
+\begin{center}
+\begin{tabular}{c}
+Cognition Layer (reasoning, planning, memory) \\
+$\downarrow$ \\
+Action Layer (routing, execution) \\
+$\downarrow$ \\
+Capability Providers
+\end{tabular}
+\end{center}
+
+\paragraph{Rationale.}
+Without this separation, agents must directly call APIs, tools, and services, leading to tight coupling to specific providers, low portability across execution environments, and ecosystem fragmentation. The action layer mediates between cognitive processes that decide what to do and execution processes that perform the action, enabling agents to focus on reasoning while the execution layer handles capability-invocation mechanics.
+
+\subsection{Principle 3: Capability Routing}
+
+\paragraph{Principle.}
+\emph{Capability execution should be dynamically routed based on context.}
+
+\paragraph{Routing function.}
+\begin{equation}
+\mathrm{Route}(C, \mathrm{Context}) \rightarrow \mathrm{Provider}
+\label{eq:routing}
+\end{equation}
+
+\paragraph{Context parameters.}
+\begin{itemize}[leftmargin=*,nosep]
+  \item \textbf{Latency:} response-time requirements.
+  \item \textbf{Cost:} budget constraints.
+  \item \textbf{Policy:} organizational or regulatory policies.
+  \item \textbf{Availability:} provider uptime and reliability.
+  \item \textbf{Security:} data handling and privacy requirements.
+\end{itemize}
+
+For example, for a capability such as \texttt{translate}, available providers may expose different cost and latency trade-offs. The routing system dynamically selects the provider based on context. This mechanism is analogous to DNS routing or service-mesh routing~\cite{consul_service_mesh}, but the routed object here is a capability rather than a network request.
+
+\subsection{Principle 4: Capability Graph Execution}
+
+\paragraph{Principle.}
+\emph{Complex AI tasks can be modeled as execution over a capability graph.}
+
+\paragraph{Formal definition.}
+A capability graph is defined as
+\begin{equation}
+G = (\mathrm{Capabilities}, \mathrm{Dependencies})
+\label{eq:capability-graph}
+\end{equation}
+and is constrained to a directed acyclic graph for execution safety and deterministic ordering.
+
+\paragraph{Example.}
+The task ``Write and publish a blog post'' can be represented by the capability chain
+\begin{center}
+\texttt{search} $\rightarrow$ \texttt{summarize} $\rightarrow$ \texttt{generate\_text} $\rightarrow$ \texttt{translate} $\rightarrow$ \texttt{publish}.
+\end{center}
+
+\paragraph{Execution process.}
+\begin{enumerate}[leftmargin=1.5em]
+    \item The agent reasons about the task and constructs the capability graph.
+    \item The orchestration layer determines execution order and provider selection.
+    \item The execution runtime invokes each capability in sequence.
+    \item Results flow through the graph, with each capability receiving inputs from predecessor nodes.
+\end{enumerate}
+
+This model enables complex tasks to be decomposed into composable capability sequences, while the execution runtime remains responsible only for the mechanics of invocation.

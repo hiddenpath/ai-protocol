@@ -1,0 +1,33 @@
+\section{Introduction}
+
+\subsection{The Integration Challenge}
+
+AI applications increasingly depend on heterogeneous capabilities provided by model vendors, external services, and local devices. Providers such as OpenAI~\cite{openai_docs}, Anthropic~\cite{anthropic_docs}, Google, and DeepSeek expose powerful models through APIs, but direct integration introduces tight coupling and escalating system complexity.
+
+Most current AI frameworks address this challenge through application-level orchestration (e.g., LangChain~\cite{langchain_docs}). Although this approach improves development velocity, it frequently combines orchestration policy and execution mechanics in one runtime, thereby increasing lock-in and reducing component reusability.
+
+\subsection{The Missing Layer}
+
+The ecosystem still lacks a minimal execution layer dedicated to capability invocation. Such a layer should:
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item Execute capabilities defined by standardized protocols.
+    \item Translate protocol requests into provider-specific API calls.
+    \item Normalize results into standardized responses.
+    \item Handle execution errors without implementing application-level retry strategies.
+\end{enumerate}
+
+This layer excludes higher-level concerns such as planning, workflow orchestration, and application logic, thereby preserving a lightweight and reusable execution boundary.
+
+\subsection{Contributions}
+
+The primary contributions are as follows:
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Formal Architectural Model:} A three-layer logical model $S = (A, P, E)$ is specified to separate cognition, orchestration, and execution with explicit layer responsibilities.
+    \item \textbf{Minimal Runtime Constraint:} Minimality is formalized as a verifiable design constraint, with explicit runtime responsibilities and non-responsibilities for deterministic capability execution.
+    \item \textbf{Unified Capability Semantics:} Capability is formalized as $C = (I, O, \Sigma, Q, \Pi)$, enabling technical invocation and economic observability to share a single schema-level object.
+    \item \textbf{Cross-Layer Integration:} The three-layer logical model is mapped to the five-layer AI-Native implementation stack, clarifying how execution-layer invariants are preserved in full-system deployments.
+\end{enumerate}
+
+The execution layer is then positioned within the broader AI-Native architecture developed in later sections. Figure placeholders are introduced in this initial conversion pass; the ASCII diagrams from the Markdown source will be redrawn as vector figures in the next phase.

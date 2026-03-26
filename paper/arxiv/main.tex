@@ -1,0 +1,51 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools,amsthm}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{threeparttable}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\newtheorem{definition}{Definition}
+
+\lstdefinestyle{paperlisting}{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false
+}
+\lstset{style=paperlisting}
+
+\title{The AI Execution Layer: A Minimal Runtime Architecture for AI-Native Systems}
+\author{Wang Luqiang\\ai-lib}
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+\input{sections/00_abstract}
+
+\input{sections/01_introduction}
+\input{sections/02_formal_model}
+\input{sections/03_minimal_execution}
+\input{sections/04_theoretical_foundation}
+
+\bibliographystyle{plain}
+\bibliography{bibliography/refs}
+
+\end{document}

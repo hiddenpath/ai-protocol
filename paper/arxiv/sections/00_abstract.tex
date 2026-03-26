@@ -1,0 +1,7 @@
+Rapid growth in AI capabilities has produced a fragmented integration landscape in which applications must connect to heterogeneous providers, tools, services, and devices through incompatible APIs. This paper introduces the AI Execution Layer, a minimal runtime architecture that standardizes capability execution while keeping orchestration logic outside the runtime boundary.
+
+The system is formalized as a three-layer logical model, $S = (A, P, E)$, where $A$ denotes cognition, $P$ denotes policy orchestration, and $E$ denotes execution. This logical model is mapped to the broader five-layer AI-Native implementation stack to separate architectural invariants from deployment structure.
+
+Capabilities are unified as $C = (I, O, \Sigma, Q, \Pi)$, where $I$ and $O$ are schemas, $\Sigma$ specifies execution semantics, $Q$ specifies quality telemetry, and $\Pi$ specifies pricing metadata. The execution runtime collects and transports $Q$ and pricing metadata without making policy decisions.
+
+Minimality is enforced as a design constraint: the runtime performs deterministic execution functions only, including protocol translation, capability invocation, result normalization, connection management, bounded retry semantics for transient failures, error propagation, and session context forwarding. By excluding planning, workflow orchestration, and provider selection, the runtime remains lightweight, stateless, and horizontally scalable while supporting streaming, polling-based asynchronous tasks, input validation, and baseline security controls.

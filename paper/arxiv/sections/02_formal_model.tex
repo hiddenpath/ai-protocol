@@ -1,0 +1,65 @@
+\section{Formal Architectural Model and Problem Formulation}
+
+\subsection{Logical Model: \texorpdfstring{$S = (A, P, E)$}{S = (A, P, E)}}
+
+The AI execution architecture is defined as the logical tuple
+\begin{equation}
+S = (A, P, E)
+\label{eq:logical-model}
+\end{equation}
+where:
+\begin{itemize}[leftmargin=*,nosep]
+  \item $A$ represents the \textbf{Agent Intelligence Layer} (reasoning and planning),
+  \item $P$ represents the \textbf{Policy Orchestration Layer} (routing and decision-making), and
+  \item $E$ represents the \textbf{Execution Layer} (capability invocation).
+\end{itemize}
+
+The model separates the AI system into three distinct layers, each with clearly defined responsibilities.
+
+\paragraph{Agent Intelligence Layer.}
+Agents represent intelligent behavior. They reason about tasks, plan actions, and decide which capabilities should be invoked. This layer handles:
+\begin{itemize}[leftmargin=*,nosep]
+  \item understanding user goals,
+  \item planning sequences of actions,
+  \item making decisions about capability requirements, and
+  \item managing conversation context and memory.
+\end{itemize}
+
+\paragraph{Policy Orchestration Layer.}
+The policy layer determines how capabilities are selected and composed. This layer is responsible for:
+\begin{itemize}[leftmargin=*,nosep]
+  \item capability selection based on agent intent,
+  \item provider preference and selection,
+  \item routing strategies,
+  \item cost or latency optimization, and
+  \item policy enforcement.
+\end{itemize}
+
+\paragraph{Execution Layer.}
+The execution layer is responsible only for executing capability calls. It does not implement routing policies, provider selection, or agent logic. This design keeps the runtime minimal and reusable.
+
+\subsection{Logical Model vs.\ Implementation Stack}
+
+In this paper, \cref{eq:logical-model} is the \textbf{logical model}. The five-layer AI-Native stack presented later is an \textbf{implementation stack} used to realize this model in production systems.
+\begin{itemize}[leftmargin=*,nosep]
+  \item The logical model specifies invariants and boundaries.
+  \item The implementation stack specifies deployment surfaces and engineering composition.
+\end{itemize}
+
+This distinction avoids a common modeling conflict: a system can be five-layer in implementation while remaining three-layer in execution logic.
+
+\subsection{Rationale for Separation}
+
+This separation addresses a critical architectural problem observed in existing frameworks. Many systems conflate orchestration responsibilities with execution mechanisms, resulting in:
+\begin{itemize}[leftmargin=*,nosep]
+  \item \textbf{Framework lock-in:} applications become tightly coupled to specific orchestration frameworks.
+  \item \textbf{Limited reusability:} runtime components cannot be easily reused across different applications.
+  \item \textbf{Complexity creep:} execution runtimes grow to include policy logic, making them difficult to maintain.
+\end{itemize}
+
+By separating these concerns, we enable:
+\begin{itemize}[leftmargin=*,nosep]
+  \item \textbf{Runtime portability:} execution runtimes can be reused across different orchestration strategies.
+  \item \textbf{Policy flexibility:} organizations can implement custom routing policies without modifying the runtime.
+  \item \textbf{Clear boundaries:} each component has well-defined inputs, outputs, and responsibilities.
+\end{itemize}

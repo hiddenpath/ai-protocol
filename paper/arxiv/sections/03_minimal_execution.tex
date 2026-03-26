@@ -1,0 +1,46 @@
+\section{Why Minimal Execution Matters}
+\label{sec:minimal-execution}
+
+Minimality is treated as a system constraint rather than a stylistic preference. Embedding policy logic into the execution runtime introduces state coupling, reduces portability, and increases cross-layer failure propagation.
+
+\begin{definition}[Minimality Constraint]
+\label{def:minimality-constraint}
+The execution layer \textbf{must} implement deterministic capability invocation only, and \textbf{must not} perform policy-driven decisions such as provider selection, strategic retry, or workflow-level fallback.
+\end{definition}
+
+Under this constraint, runtime semantics are specified through core responsibilities and explicit non-responsibilities.
+
+\subsection{Core Responsibilities}
+\label{subsec:core-responsibilities}
+
+The runtime serves as a standardized capability execution engine. Its responsibilities are intentionally limited to six core functions:
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Capability Invocation:} execute a capability defined in the AI Protocol. The runtime receives standardized capability requests and invokes the appropriate execution path.
+    \item \textbf{Protocol Translation:} convert protocol-level requests into provider-specific API calls. This translation layer enables applications to work with standardized capability definitions while the runtime handles provider-specific implementations.
+    \item \textbf{Result Normalization:} return standardized responses to the caller. Regardless of which provider executed the capability, the runtime normalizes results into a consistent format.
+    \item \textbf{Connection Handling:} manage network communication with providers, including connection pooling, timeout management, and network-level error handling.
+    \item \textbf{Error Propagation:} report execution errors without implementing application-level retry strategies. The runtime distinguishes between execution errors, which it reports, and retry logic, which belongs in the orchestration layer.
+    \item \textbf{Session Transport:} forward session context without interpreting application policy. The runtime transports contextual information required for capability execution but does not interpret or modify policy decisions.
+\end{enumerate}
+
+\paragraph{Optional bounded micro-retry semantics.}
+For transient network failures such as connection timeouts or HTTP 429 rate limits, the runtime may implement limited micro-retries---typically one or two immediate retries with exponential backoff at the network layer. This differs from application-level retry strategies in that micro-retries are bounded and automatic, address only transient network failures, do not implement policy-driven retry logic such as provider fallback, and must remain within the overall execution timeout budget.
+
+This choice reflects production constraints: transient network failures are common, and surfacing every transient event to the orchestration layer introduces avoidable latency and cross-layer communication overhead.
+
+\subsection{What the Runtime Does Not Do}
+\label{subsec:runtime-non-responsibilities}
+
+To maintain its minimal design, the runtime explicitly avoids:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Agent Planning:} deciding what sequence of capabilities to invoke.
+    \item \textbf{Workflow Orchestration:} managing complex multi-capability workflows.
+    \item \textbf{Application Logic:} implementing application-specific business logic.
+    \item \textbf{Provider Selection:} choosing which provider should execute a capability.
+    \item \textbf{Routing Policies:} implementing cost optimization or latency-based routing.
+    \item \textbf{Application-Level Retry Strategies:} determining when and how to retry failed executions across providers or workflows.
+\end{itemize}
+
+These responsibilities belong in the orchestration and agent layers, maintaining clear separation of concerns.
