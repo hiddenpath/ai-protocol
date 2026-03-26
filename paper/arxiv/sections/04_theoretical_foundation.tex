@@ -109,15 +109,15 @@ The task ``Write and publish a blog post'' can be represented as the capability 
 \centering
 \begin{tikzpicture}[
   node distance=1.2cm and 0.8cm,
-  cap/.style={draw, rounded corners=2pt, minimum width=2.0cm, minimum height=0.8cm, align=center, fill=blue!6},
+  capnode/.style={draw, rounded corners=2pt, minimum width=2.0cm, minimum height=0.8cm, align=center, fill=blue!6},
   exec/.style={draw, rounded corners=2pt, minimum width=1.2cm, minimum height=0.6cm, align=center, fill=green!8},
   >=Latex
 ]
-\node[cap] (search) {\texttt{search}};
-\node[cap, right=of search] (sum) {\texttt{summarize}};
-\node[cap, right=of sum] (gen) {\texttt{generate\_text}};
-\node[cap, right=of gen] (trans) {\texttt{translate}};
-\node[cap, right=of trans] (pub) {\texttt{publish}};
+\node[capnode] (search) {\texttt{search}};
+\node[capnode, right=of search] (sum) {\texttt{summarize}};
+\node[capnode, right=of sum] (gen) {\texttt{generate\_text}};
+\node[capnode, right=of gen] (trans) {\texttt{translate}};
+\node[capnode, right=of trans] (pub) {\texttt{publish}};
 
 \node[exec, below=of search] (e1) {exec};
 \node[exec, below=of sum] (e2) {exec};
