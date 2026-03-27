@@ -18,31 +18,12 @@
 \usepackage{enumitem}
 \usepackage{alltt}
 \usepackage{float}
-\usepackage{listings}
 \usepackage[hidelinks]{hyperref}
 \usepackage[nameinlink,noabbrev]{cleveref}
 
 \newtheorem{definition}{Definition}
 
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric}
-
-\lstdefinestyle{paperlisting}{
-  basicstyle=\ttfamily\footnotesize,
-  backgroundcolor=\color{gray!6},
-  breaklines=true,
-  frame=single,
-  framerule=0.4pt,
-  rulecolor=\color{black!18},
-  framesep=6pt,
-  xleftmargin=0.4em,
-  xrightmargin=0.2em,
-  columns=fullflexible,
-  keepspaces=true,
-  showstringspaces=false,
-  aboveskip=0.8em,
-  belowskip=0.8em
-}
-\lstset{style=paperlisting}
 
 \newenvironment{codeframe}[1][0.82\linewidth]{%
   \begin{center}
@@ -81,8 +62,9 @@
 \input{sections/12_conclusion}
 \input{sections/appendices}
 
-\nocite{*}
-\bibliographystyle{plain}
+\nocite{openai_docs,anthropic_docs,langchain_docs,kubernetes_arch,newman_microservices,burns_borg_kubernetes,consul_service_mesh,cncf_definition}
+\bibliographystyle{unsrt}
 \bibliography{bibliography/refs}
+\input{sections/99_endmatter}
 
 \end{document}

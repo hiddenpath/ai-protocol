@@ -87,52 +87,57 @@ The error propagation path is shown in \cref{fig:sequence-error}. The diagram pr
 
 \subsection{Text Generation Capability}
 
-\begin{lstlisting}[caption={Example text-generation capability manifest.},label={lst:text-generation-capability}]
-name: generate_text
+\begin{quote}
+\small
+\begin{alltt}
+name: generate\_text
 version: "1.0"
 description: Generate text based on a prompt
 provider: openai
 model: gpt-5.4
-input_schema:
+input\_schema:
   type: object
   properties:
     prompt:
       type: string
-    max_tokens:
+    max\_tokens:
       type: integer
       default: 1000
     temperature:
       type: number
       default: 0.7
-output_schema:
+output\_schema:
   type: object
   properties:
     text:
       type: string
-    tokens_used:
+    tokens\_used:
       type: integer
 execution:
   endpoint: /v1/chat/completions
   method: POST
-  timeout_ms: 30000
-\end{lstlisting}
+  timeout\_ms: 30000
+\end{alltt}
+\end{quote}
 
 \subsection{Web Search Capability}
 
-\begin{lstlisting}[caption={Example web-search capability manifest.},label={lst:web-search-capability}]
-name: search_web
+\begin{quote}
+\small
+\begin{alltt}
+name: search\_web
 version: "1.0"
 description: Search the web for information
-provider: search_service
-input_schema:
+provider: search\_service
+input\_schema:
   type: object
   properties:
     query:
       type: string
-    num_results:
+    num\_results:
       type: integer
       default: 10
-output_schema:
+output\_schema:
   type: object
   properties:
     results:
@@ -149,14 +154,17 @@ output_schema:
 execution:
   endpoint: /v1/search
   method: GET
-\end{lstlisting}
+\end{alltt}
+\end{quote}
 
 \section{Runtime Pseudocode}
 
 \subsection{Execute Capability}
 
-\begin{lstlisting}[caption={Pseudocode for execution-runtime capability invocation.},label={lst:execute-capability}]
-def execute_capability(request: CapabilityRequest) -> Result:
+\begin{quote}
+\small
+\begin{alltt}
+def execute\_capability(request: CapabilityRequest) -> Result:
     """
     Execute a capability request.
 
@@ -166,40 +174,43 @@ def execute_capability(request: CapabilityRequest) -> Result:
     Returns:
         Normalized execution result
     """
-    # 1. Validate request
-    validate_request(request)
+    \# 1. Validate request
+    validate\_request(request)
 
-    # 2. Translate to provider-specific format
-    provider_request = translate_request(request)
+    \# 2. Translate to provider-specific format
+    provider\_request = translate\_request(request)
 
-    # 3. Invoke provider API
+    \# 3. Invoke provider API
     try:
-        provider_response = invoke_provider(
+        provider\_response = invoke\_provider(
             endpoint=request.provider.endpoint,
-            data=provider_request
+            data=provider\_request
         )
     except ConnectionError as e:
-        # Propagate error (no retry logic)
+        \# Propagate error (no retry logic)
         raise ExecutionError(
             capability=request.capability,
-            error_type="connection",
+            error\_type="connection",
             message=str(e)
         )
 
-    # 4. Normalize response
-    result = normalize_response(
+    \# 4. Normalize response
+    result = normalize\_response(
         capability=request.capability,
-        provider_response=provider_response
+        provider\_response=provider\_response
     )
 
-    # 5. Return standardized result
+    \# 5. Return standardized result
     return result
-\end{lstlisting}
+\end{alltt}
+\end{quote}
 
 \subsection{Request Translation}
 
-\begin{lstlisting}[caption={Pseudocode for protocol-to-provider request translation.},label={lst:request-translation}]
-def translate_request(request: CapabilityRequest) -> dict:
+\begin{quote}
+\small
+\begin{alltt}
+def translate\_request(request: CapabilityRequest) -> dict:
     """
     Translate standardized request to provider-specific format.
 
@@ -209,12 +220,13 @@ def translate_request(request: CapabilityRequest) -> dict:
     Returns:
         Provider-specific request payload
     """
-    capability_manifest = load_manifest(request.capability)
-    provider_adapter = get_adapter(request.provider.name)
+    capability\_manifest = load\_manifest(request.capability)
+    provider\_adapter = get\_adapter(request.provider.name)
 
-    return provider_adapter.translate(
+    return provider\_adapter.translate(
         capability=request.capability,
-        input_data=request.input,
-        manifest=capability_manifest
+        input\_data=request.input,
+        manifest=capability\_manifest
     )
-\end{lstlisting}
+\end{alltt}
+\end{quote}

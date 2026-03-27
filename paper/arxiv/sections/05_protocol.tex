@@ -14,19 +14,30 @@ The AI Protocol defines how capabilities are described. It specifies:
 The protocol serves as the contract boundary between orchestration and execution: orchestration decides policy, while execution enforces invocation semantics.
 
 The protocol is typically represented as structured manifests:
-\begin{quote}
-\small
-\begin{alltt}
-provider/
-|- metadata.yaml
-\- models/
-   |- model_a.yaml
-   \- model_b.yaml
-      \- capabilities/
-         |- chat.yaml
-         \- embedding.yaml
-\end{alltt}
-\end{quote}
+\begin{center}
+\begin{tikzpicture}[
+  folder/.style={draw=black!35, rounded corners=2pt, fill=blue!6, minimum width=3.8cm, minimum height=0.7cm, align=left, font=\ttfamily\small, anchor=west},
+  child/.style={draw=black!25, rounded corners=2pt, fill=gray!6, minimum width=3.4cm, minimum height=0.6cm, align=left, font=\ttfamily\small, anchor=west},
+  line/.style={draw=black!45, line width=0.7pt}
+]
+\node[folder] (provider) at (0,0) {provider/};
+\node[child] (metadata) at (1.0,-0.9) {metadata.yaml};
+\node[folder] (models) at (1.0,-1.8) {models/};
+\node[child] (modela) at (2.0,-2.7) {model\_a.yaml};
+\node[child] (modelb) at (2.0,-3.6) {model\_b.yaml};
+\node[folder] (caps) at (3.0,-4.5) {capabilities/};
+\node[child] (chat) at (4.0,-5.4) {chat.yaml};
+\node[child] (embed) at (4.0,-6.3) {embedding.yaml};
+
+\draw[line] (provider.west) ++(0.2,-0.18) |- (metadata.west);
+\draw[line] (provider.west) ++(0.2,-0.18) |- (models.west);
+\draw[line] (models.west) ++(0.2,-0.18) |- (modela.west);
+\draw[line] (models.west) ++(0.2,-0.18) |- (modelb.west);
+\draw[line] (modelb.west) ++(0.2,-0.18) |- (caps.west);
+\draw[line] (caps.west) ++(0.2,-0.18) |- (chat.west);
+\draw[line] (caps.west) ++(0.2,-0.18) |- (embed.west);
+\end{tikzpicture}
+\end{center}
 
 \subsection{Capability Definition}
 
@@ -41,20 +52,22 @@ Each capability is defined with:
   \item \textbf{Provider Metadata:} information about the provider offering this capability.
 \end{itemize}
 
-\begin{lstlisting}[language={},caption={Example capability definition.},label={lst:capability-definition}]
-name: generate_text
+\begin{quote}
+\small
+\begin{alltt}
+name: generate\_text
 description: Generate text based on a prompt
-input_schema:
+input\_schema:
   type: object
   properties:
     prompt:
       type: string
       description: The input prompt
-    max_tokens:
+    max\_tokens:
       type: integer
       description: Maximum tokens to generate
   required: [prompt]
-output_schema:
+output\_schema:
   type: object
   properties:
     text:
@@ -64,14 +77,15 @@ execution:
   endpoint: /v1/completions
   method: POST
 quality:
-  telemetry_fields: [execution_latency_ms, retry_count]
+  telemetry\_fields: [execution\_latency\_ms, retry\_count]
 pricing:
-  billing_model: per_token
+  billing\_model: per\_token
   currency: USD
 provider:
   name: Example Provider
   version: 1.0.0
-\end{lstlisting}
+\end{alltt}
+\end{quote}
 
 \subsection{Provider-Centric Organization}
 
@@ -85,17 +99,26 @@ rather than
 \end{center}
 
 The runtime can dynamically construct a capability index:
-\begin{quote}
-\small
-\begin{alltt}
-chat/
-|- provider A
-|- provider B
-\- provider C
-embedding/
-|- provider A
-\- provider D
-\end{alltt}
-\end{quote}
+\begin{center}
+\begin{tikzpicture}[
+  folder/.style={draw=black!35, rounded corners=2pt, fill=green!8, minimum width=3.2cm, minimum height=0.7cm, align=left, font=\ttfamily\small, anchor=west},
+  child/.style={draw=black!25, rounded corners=2pt, fill=gray!6, minimum width=2.8cm, minimum height=0.6cm, align=left, font=\ttfamily\small, anchor=west},
+  line/.style={draw=black!45, line width=0.7pt}
+]
+\node[folder] (chatf) at (0,0) {chat/};
+\node[child] (pa) at (1.0,-0.9) {provider A};
+\node[child] (pb) at (1.0,-1.8) {provider B};
+\node[child] (pc) at (1.0,-2.7) {provider C};
+\node[folder] (embedf) at (0,-4.0) {embedding/};
+\node[child] (pea) at (1.0,-4.9) {provider A};
+\node[child] (ped) at (1.0,-5.8) {provider D};
+
+\draw[line] (chatf.west) ++(0.2,-0.18) |- (pa.west);
+\draw[line] (chatf.west) ++(0.2,-0.18) |- (pb.west);
+\draw[line] (chatf.west) ++(0.2,-0.18) |- (pc.west);
+\draw[line] (embedf.west) ++(0.2,-0.18) |- (pea.west);
+\draw[line] (embedf.west) ++(0.2,-0.18) |- (ped.west);
+\end{tikzpicture}
+\end{center}
 
 This index can be rebuilt periodically and optimized based on user preferences, latency measurements, cost calculations, and reliability metrics.
